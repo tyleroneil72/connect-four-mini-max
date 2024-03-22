@@ -29,8 +29,7 @@ public class Move {
                 System.out.println("Invalid input. Please enter a valid column (1-7).");
                 scanner.nextLine(); // Clear the input buffer
             }
-        }
-        
+        } 
     }
 
     public static Move createMove(int col, Player player){
