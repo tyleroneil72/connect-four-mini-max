@@ -6,5 +6,4 @@ public class Player {
         this.name = name;
         this.colour = colour;
     }
-
 }
