@@ -22,6 +22,9 @@ public class Main {
             }
 
             b.makeMove(nextMove);
+            // Clear the console
+            System.out.print("\033[H\033[2J");
+            System.out.flush();
             b.printBoard();
 
             y = nextMove.row;
@@ -34,6 +37,8 @@ public class Main {
         else
             System.out.println("Game over, Draw!");
     }
+
+
 
     public static void main(String[] args) {
         checkFour();
