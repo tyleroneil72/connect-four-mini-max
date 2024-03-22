@@ -1,3 +1,4 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Move {
@@ -18,11 +19,18 @@ public class Move {
         Scanner scanner = new Scanner(System.in);
         System.out.println(player.colour + "'s turn. Enter column: ");
         while(true){
-            int col = scanner.nextInt();
-            if(col >= 1 && col <= 7)
-                return new Move(col - 1, player);
-            System.out.println("Invalid column. Please enter a valid column (1-7).");
+            try {
+                int col = scanner.nextInt();
+                if(col >= 1 && col <= 7) {
+                    return new Move(col - 1, player);
+                }
+                System.out.println("Invalid column. Please enter a valid column (1-7).");
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a valid column (1-7).");
+                scanner.nextLine(); // Clear the input buffer
+            }
         }
+        
     }
 
     public static Move createMove(int col, Player player){
