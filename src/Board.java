@@ -175,6 +175,12 @@ public class Board {
     }
 
     public void printBoard(){
+        // Color codes for red, yellow, and reset.
+        String ANSI_RED = "\u001B[31m";
+        String ANSI_YELLOW = "\u001B[33m";
+        String ANSI_RESET = "\u001B[0m";
+        String ANSI_GREEN = "\u001B[32m";
+        String TOKEN = "O";
         System.out.print("   ");
         for(int j = 0; j < WIDTH; j++){
             System.out.print("| " + (j+1) + " ");
@@ -185,9 +191,9 @@ public class Board {
             System.out.print((i+1) + "  ");
             for(int j = 0; j < WIDTH; j++){
                 if(grid[i][j] == 1)
-                    System.out.print("| R ");
+                    System.out.print("| " + ANSI_RED +  TOKEN + ANSI_RESET + " ");
                 else if(grid[i][j] == -1)
-                    System.out.print("| Y ");
+                    System.out.print("| " + ANSI_GREEN + TOKEN + ANSI_RESET + " ");
                 else
                     System.out.print("|   ");
             }
