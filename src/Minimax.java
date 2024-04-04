@@ -3,17 +3,22 @@ import java.util.HashMap;
 
 public class Minimax
 {
-
     public static int[] columnOrder = new int[] {3,2,4,1,5,0,6};
     
     public static int runMinimax(Board board, Player[] players, boolean isMax, int alpha, int beta, int depth) 
     {
+        /*
+         * Minimax algorithm with alpha-beta pruning, move ordering and some sort of iterative deepining(?)
+         * -> assumes player 1 is always a maximizer and player 2 is always a minimizer
+         * The algorithm uses depth to distinguish between winning moves, i.e. a winning move that requires less moves is better.
+         */
         Move lastMove = board.moves.peek();
 
         // check for terminal states, win/loss
         if (board.checkGameWon(lastMove.row, lastMove.col))
         {
             if (board.moveCount % 2 == 0) {
+                // player 2 will always win on an even move count.
                 return -1 * depth;
             }
             else {
@@ -33,14 +38,14 @@ public class Minimax
         }
         if (isMax)
         {
-            // check if depth has exceeded alpha  depth.
+            // check if depth has exceeded alpha (any move encountered after this will be worse than the winning alternative).
             if (depth <= alpha) 
             {
                 // if alpha has been established at a lower depth, then any winning state at a lower depth will be less valuble than alpha
                 // therefore skip and return alpha.
                 return depth;
             }
-            
+
             for (int i : moveSeq) {
                 Move possibleMove = Move.createMove(i + 1, players[0]);
                 if (board.checkAvailableMove(possibleMove) == -1)
@@ -59,7 +64,7 @@ public class Minimax
         }
         else
         {
-            // check if depth has exceeded beta depth.
+            // check if depth has exceeded beta depth (any move encountered after this will be worse than the winning alternative)
             if (-1 * depth >= beta) 
             {
                 // if beta has been established at a lower depth, then any winning state at a lower depth will be less valuble than beta
@@ -83,11 +88,11 @@ public class Minimax
         }
     }
 
-    public static void getBestMove(Board board, Player[] players)
+    public static int getBestMove(Board board, Player[] players)
     {
         int bestCol = -1;
         int bestScore = 1000;
-        int[] scores = new int[7];
+        // int[] scores = new int[7]; // if you want to see the evaluated scores for each available col.
         for (int col : columnOrder) {
             Move possibleMove = new Move(col, players[1]);
             if (board.checkAvailableMove(possibleMove) == -1)
@@ -96,7 +101,7 @@ public class Minimax
             }
             board.makeMove(possibleMove);
             int score = runMinimax(board, players, true, -1000, 1000, 42 - board.moveCount);            
-            scores[col] = score;
+            // scores[col] = score;
             board.undoMove();
             if (score < bestScore)
             {
@@ -104,16 +109,21 @@ public class Minimax
                 bestCol = col;
             }
         }
-        Move bestMove = new Move(bestCol, players[1]);
-        board.checkAvailableMove(bestMove);
-        board.makeMove(bestMove);
-        System.out.println("Best Score: " + bestScore);
-        System.out.println("Best move: " + bestCol);
-        board.printBoard();
-        for (int i = 0; i < scores.length; i++) {
-            System.out.println("For column " + i + " score is: " + scores[i]);
-        }
-        
+
+        // // test where move is.
+        // Move bestMove = new Move(bestCol, players[1]);
+        // board.checkAvailableMove(bestMove);
+        // board.makeMove(bestMove);
+        // System.out.println("Best Score: " + bestScore);
+        // System.out.println("Best move: " + bestCol);
+        // board.printBoard();
+
+        // // test to see scores for each available col.
+        // for (int i = 0; i < scores.length; i++) {
+        //     System.out.println("For column " + i + " score is: " + scores[i]);
+        // }
+
+        return bestCol;
     }
     
 
