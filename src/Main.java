@@ -1,3 +1,4 @@
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class Main {
@@ -5,7 +6,7 @@ public class Main {
     private static Scanner scanner = new Scanner(System.in);
     private static int screenWidth = 40;
     
-    private static void clearScreen() {
+    public static void clearScreen() {
         // helper function to clear screen.
         System.out.print("\033[H\033[2J");
         System.out.flush();
@@ -168,6 +169,8 @@ public class Main {
 
             y = nextMove.row;
             x = nextMove.col;
+            System.out.println(x);
+            System.out.println(y);
         }
         if(b.moveCount < 42) {
             assert nextMove != null;
@@ -180,7 +183,32 @@ public class Main {
 
 
     public static void main(String[] args) {
-        // checkFour();
-        app();
+        // app();
+        test();
+    }
+
+    public static void test() 
+    {
+        Player p1 = new Player("P1", Colour.RED);
+        Player p2 = new Player("P2", Colour.YELLOW);
+
+        Player[] players = new Player[] {p1, p2};
+        // Board b = new Board("000000111111222224245456556565666", players);
+        // Board b = new Board("16350431054252051064634201163",players);
+        // Board b = new Board("163504310542520512602466254",players);
+        // Board b = new Board("165435420062132510060",players);
+        // Board b = new Board("61122", players);
+        // Board b = new Board("33344443110", players);
+        Board b = new Board("22340144224133065565651", players);
+        b.printBoard();
+        // System.out.println(b.checkGameWon(3, 6));
+        long start = System.currentTimeMillis();
+        // for (int i = 0; i < 7; i++) {
+        //     System.out.println("score for col " + i + " is: " + b.evalMoveScore(i, -1));
+        // }
+        Minimax.getBestMove(b, players);
+        long end = System.currentTimeMillis();
+        System.out.println(end-start + "ms");
+        
     }
 }
