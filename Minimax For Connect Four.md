@@ -75,13 +75,13 @@ And the following methods:
 - `void makeMove(Move move)`: Updates the `grid` with the player value (`-1`, `+1`) at the given move location. Pushes the latest move into the `move` stack.
 - `void undoMove()`: Pops from the `move` stack and decrements `moveCount`.
 - `bool checkGameWon()`: Returns whether a player won or not checking all possibilities.
-- `double evalGameState()`: Returns the static evaluation for the given current board.
-
+- `int evalMoveScore()`: Returns the static evaluation for the given current board.
+- `int[] getSortedMoves()`: Returns an array of column numbers sorted in the order of best estimated move to worst.
 **Evaluating the Game State:**
 - Tracking Open chains: 
 
 ```
-public double evalMoveScore(int col, int target)
+public int evalMoveScore(int col, int target)
 {
 	int score = 0;
 	if (unavailable move) { return score; }
