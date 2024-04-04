@@ -94,6 +94,8 @@ public int evalMoveScore(int col, int target)
 		score += m * n * (a^n);
 		if G[row - 1][col] != G[row][col] { break; }
 	}
+	// reset counter
+	counter = 0;
 	for the next 4 tokens to the right
 	{
 		m = G[row][col] == target ? 2 : 1;
@@ -106,6 +108,7 @@ public int evalMoveScore(int col, int target)
 		score += m * n * (a^n);
 		if G[row][col - 1] != G[row][col] { break; }
 	}
+	// reset counter
 	and the same for diagonals...
 
 	return score;
