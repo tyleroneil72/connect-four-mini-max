@@ -51,14 +51,14 @@ Some other important points to keep in mind are:
 - The score for a column must always be a **scalar** quantity. That is, it must be the same regardless of whether it is a maximizing move or a minimizing move.
 
 Considering all of that, the following formula has been devised:
-$$S_{net} = \sum_{d \,\in\, D} S_d$$
+$$S_{net} = \sum_{d \in D} S_d$$
 where $S_d$ is
-$$S_d = \sum\limits_{\substack{0\,\le\, n\,\le\,4 \\ G_{i,j} \,= \,G_{{i\pm 1},{j\pm 1}}}} m \times n \times a^n$$
+$$S_d = \sum\limits_{\substack{0\le n\le4 \\ G_{i,j} = G_{{i\pm 1},{j\pm 1}}}} m \times n \times a^n$$
 	where $S_d$ is the score in a given direction (vertical, horizontal, diagonal),
 	$n$ signifies which occurrence of the token is being evaluated (1st in chain, 2nd in chain, 3rd in chain)
 	$m$ is a factor to prioritize whether the the chain is a player's or the opponents
 	$a$ is an amplifying factor which is exponentiated by $n$ in order to have a greater score gap between chains of differing lengths. Using an exponential polynomial mitigates the possibility that a chain of a greater length will be overpowered by a chain of a smaller length.
-	and the condition $G_{i,j} \,= \,G_{{i+\Delta i},{j+\Delta j}}$ is used to only evaluate the summation when the element at location $(i,j)$ in the grid $G$ is the same token as the next element $(i\pm 1, j\pm 1)$ being checked in a given direction.
+	and the condition $G_{i,j} = G_{{i+\Delta i},{j+\Delta j}}$ is used to only evaluate the summation when the element at location $(i,j)$ in the grid $G$ is the same token as the next element $(i\pm 1, j\pm 1)$ being checked in a given direction.
  - - - 
 
 ### Implementation
