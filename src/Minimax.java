@@ -74,7 +74,7 @@ public class Minimax {
                 beta = Math.min(beta, runMinimax(board, players, true, alpha, beta, depth - 1));
                 board.undoMove();
                 if (beta <= alpha) {
-                    return beta;
+                    return alpha;
                 }
             }
             return beta;
