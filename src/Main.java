@@ -1,3 +1,4 @@
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class Main {
@@ -5,7 +6,7 @@ public class Main {
     private static Scanner scanner = new Scanner(System.in);
     private static int screenWidth = 40;
     
-    private static void clearScreen() {
+    public static void clearScreen() {
         // helper function to clear screen.
         System.out.print("\033[H\033[2J");
         System.out.flush();
@@ -168,6 +169,8 @@ public class Main {
 
             y = nextMove.row;
             x = nextMove.col;
+            System.out.println(x);
+            System.out.println(y);
         }
         if(b.moveCount < 42) {
             assert nextMove != null;
@@ -180,7 +183,8 @@ public class Main {
 
 
     public static void main(String[] args) {
-        // checkFour();
         app();
     }
+
+   
 }
