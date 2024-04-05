@@ -84,7 +84,8 @@ public class Minimax {
 
     public static int getBestMove(Board board) {
         int bestCol = -1;
-        int bestScore = board.getCurrentPlayer() == board.players[1] ? 100000 : -100000;
+        boolean isMax = board.players[0] instanceof AIPlayer;
+        int bestScore = isMax ? -100000 : 100000;
         // int[] scores = new int[7]; // if you want to see the evaluated scores for
         // each available col.
         for (int col : columnOrder) {
@@ -93,12 +94,21 @@ public class Minimax {
                 continue;
             }
             board.makeMove(possibleMove);
-            int score = runMinimax(board, true, -100000, 100000, 42 - board.moveCount);
+            int score = runMinimax(board, !isMax, -100000, 100000, 42 - board.moveCount);
             // scores[col] = score;
+
             board.undoMove();
-            if (score < bestScore) {
-                bestScore = score;
-                bestCol = col;
+            if (isMax) {
+                if (score > bestScore) {
+                    bestScore = score;
+                    bestCol = col;
+                }
+            }
+            else {
+                if (score < bestScore) {
+                    bestScore = score;
+                    bestCol = col;
+                }
             }
         }
 

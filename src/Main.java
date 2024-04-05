@@ -65,8 +65,15 @@ public class Main {
             }
             Player human = new Player(name, color.equals("R") ? Colour.RED : Colour.YELLOW);
             Player AI = new AIPlayer(color.equals("R") ? Colour.YELLOW : Colour.RED);
-            // clearScreen();
-            playGame(human, AI);
+            // get player 1
+            System.out.print("Would you like to go first? [Y | N]: ");
+            String choice = scanner.nextLine();
+            clearScreen();
+            if (choice.equals("Y"))
+                playGame(human, AI);
+            else
+                playGame(AI, human);
+
             
         }
     }
@@ -148,7 +155,6 @@ public class Main {
 
     public static void playGame(Player p1, Player p2) {
         Board board = new Board(p1, p2);
-        System.out.println(board.getCurrentPlayer().colour.toString());
         board.printBoard();  
         int x = 0, y = 0;
         Move nextMove = null;      
