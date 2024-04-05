@@ -5,7 +5,7 @@ public class Main {
     // static members to be accessed by all app methods.
     private static Scanner scanner = new Scanner(System.in);
     private static int screenWidth = 40;
-    
+
     public static void clearScreen() {
         // helper function to clear screen.
         System.out.print("\033[H\033[2J");
@@ -18,8 +18,7 @@ public class Main {
 
         splashScreen();
         int gameMode;
-        while (true) 
-        {
+        while (true) {
             // get valid choice for main menu options.
             mainMenu();
             System.out.print("Choose an option: ");
@@ -35,8 +34,7 @@ public class Main {
         if (gameMode == 1) {
             // user selected Multiplayer.
             checkFour();
-        }
-        else if (gameMode == 2) {
+        } else if (gameMode == 2) {
             // user selected Single-Player
             int difficulty;
             while (true) {
@@ -50,9 +48,10 @@ public class Main {
                 }
                 difficulty = choice;
                 break;
-            }            
+            }
         }
     }
+
     private static String formatMenuTextCenter(String text) {
         // helper method to write center aligned text in the format of the menu.
         StringBuilder textFormatted = new StringBuilder();
@@ -63,6 +62,7 @@ public class Main {
         textFormatted.append("||");
         return textFormatted.toString();
     }
+
     private static String formatMenuTextLjust(String text) {
         // helper method to write Left Justified aligned text in the format of the menu.
         StringBuilder textFormatted = new StringBuilder();
@@ -75,15 +75,17 @@ public class Main {
         return textFormatted.toString();
 
     }
+
     private static Integer getChoice(int min, int max) {
-        // validates user input to return value within a provided range. Returns null if invalid input.
+        // validates user input to return value within a provided range. Returns null if
+        // invalid input.
         String choice = scanner.nextLine();
         if (choice.matches("^[0-9]$")) {
             int chosen = Integer.parseInt(choice);
             if (chosen >= min && chosen <= max) {
                 return chosen;
             }
-        }       
+        }
         return null;
     }
 
@@ -110,7 +112,7 @@ public class Main {
 
         String title = formatMenuTextCenter("CONNECT FOUR");
         System.out.println(title);
-        
+
         System.out.println("||" + " ".repeat(screenWidth - 4) + "||");
 
         String toMainMenu = formatMenuTextCenter("Press Enter to Continue...");
@@ -124,7 +126,7 @@ public class Main {
 
     public static void mainMenu() {
         // app screen to display game modes.
-         System.out.println("=".repeat(screenWidth));
+        System.out.println("=".repeat(screenWidth));
         for (int i = 0; i < 2; i++) {
             System.out.println("||" + " ".repeat(screenWidth - 4) + "||");
         }
@@ -139,13 +141,13 @@ public class Main {
         System.out.println("=".repeat(screenWidth));
     }
 
-    public static void checkFour(){
+    public static void checkFour() {
 
         Board b = new Board();
 
         Player p1 = new Player("P1", Colour.RED);
         Player p2 = new Player("P2", Colour.YELLOW);
-        Player[] players = new Player[]{p1, p2};
+        Player[] players = new Player[] { p1, p2 };
 
         int y = 0;
         int x = 0;
@@ -153,10 +155,10 @@ public class Main {
 
         b.printBoard();
 
-        while(!b.checkGameWon(y, x) && b.moveCount < 42){
+        while (!b.checkGameWon(y, x) && b.moveCount < 42) {
 
             nextMove = Move.createMove(players[b.moveCount % 2]);
-            if(b.checkAvailableMove(nextMove) == -1){
+            if (b.checkAvailableMove(nextMove) == -1) {
                 System.out.println("Invalid move.");
                 continue;
             }
@@ -172,19 +174,14 @@ public class Main {
             System.out.println(x);
             System.out.println(y);
         }
-        if(b.moveCount < 42) {
+        if (b.moveCount < 42) {
             assert nextMove != null;
             System.out.println("Game over, " + nextMove.player.colour + " won!");
-        }
-        else
+        } else
             System.out.println("Game over, Draw!");
     }
-
-
 
     public static void main(String[] args) {
         app();
     }
-
-   
 }
