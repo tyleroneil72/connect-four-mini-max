@@ -4,7 +4,8 @@ import java.util.HashMap;
 public class Minimax {
     public static int[] columnOrder = new int[] { 3, 2, 4, 1, 5, 0, 6 };
 
-    public static int runMinimax(Board board, Player[] players, boolean isMax, int alpha, int beta, int depth) {
+    public static int runMinimax(Board board, boolean isMax, int alpha, int beta, int depth) {
+        
         /*
          * Minimax algorithm with alpha-beta pruning, move ordering and some sort of
          * iterative deepining(?)
@@ -13,8 +14,8 @@ public class Minimax {
          * move that requires less moves is better.
          */
         Move lastMove = board.moves.peek();
-
         // check for terminal states, win/loss
+       
         if (board.checkGameWon(lastMove.row, lastMove.col)) {
             if (board.moveCount % 2 == 0) {
                 // player 2 will always win on an even move count.
@@ -39,20 +40,20 @@ public class Minimax {
             if (depth <= alpha) {
                 // if alpha has been established at a lower depth, then any winning state at a
                 // lower depth will be less valuble than alpha
-                // therefore skip and return alpha.
+                // therefore skip.
                 return depth;
             }
 
             for (int i : moveSeq) {
-                Move possibleMove = Move.createMove(i + 1, players[0]);
+                Move possibleMove = Move.createMove(i + 1, board.players[0]);
                 if (board.checkAvailableMove(possibleMove) == -1) {
                     continue;
                 }
                 board.makeMove(possibleMove);
-                alpha = Math.max(alpha, runMinimax(board, players, false, alpha, beta, depth - 1));
+                alpha = Math.max(alpha, runMinimax(board, false, alpha, beta, depth - 1));
                 board.undoMove();
                 if (alpha >= beta) {
-                    return beta;
+                    return beta; // ignore value.
                 }
             }
             return alpha;
@@ -62,37 +63,37 @@ public class Minimax {
             if (-1 * depth >= beta) {
                 // if beta has been established at a lower depth, then any winning state at a
                 // lower depth will be less valuble than beta
-                // therefore skip and return beta.
+                // therefore skip.
                 return -1 * depth;
             }
             for (int i : moveSeq) {
-                Move possibleMove = Move.createMove(i + 1, players[1]);
+                Move possibleMove = Move.createMove(i + 1, board.players[1]);
                 if (board.checkAvailableMove(possibleMove) == -1) {
                     continue;
                 }
                 board.makeMove(possibleMove);
-                beta = Math.min(beta, runMinimax(board, players, true, alpha, beta, depth - 1));
+                beta = Math.min(beta, runMinimax(board, true, alpha, beta, depth - 1));
                 board.undoMove();
                 if (beta <= alpha) {
-                    return alpha;
+                    return alpha; // ignore value
                 }
             }
             return beta;
         }
     }
 
-    public static int getBestMove(Board board, Player[] players) {
+    public static int getBestMove(Board board) {
         int bestCol = -1;
-        int bestScore = 1000;
+        int bestScore = board.getCurrentPlayer() == board.players[1] ? 100000 : -100000;
         // int[] scores = new int[7]; // if you want to see the evaluated scores for
         // each available col.
         for (int col : columnOrder) {
-            Move possibleMove = new Move(col, players[1]);
+            Move possibleMove = new Move(col, board.getCurrentPlayer());
             if (board.checkAvailableMove(possibleMove) == -1) {
                 continue;
             }
             board.makeMove(possibleMove);
-            int score = runMinimax(board, players, true, -1000, 1000, 42 - board.moveCount);
+            int score = runMinimax(board, true, -100000, 100000, 42 - board.moveCount);
             // scores[col] = score;
             board.undoMove();
             if (score < bestScore) {

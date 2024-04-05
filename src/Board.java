@@ -22,14 +22,30 @@ public class Board {
         this.moveCount = 0;
         this.moveHistory = "";
     }
+    
+    public Board(Player p1, Player p2) {
+        this.grid = new int[HEIGHT][WIDTH];
+        this.moveCount = 0;
+        this.moveHistory = "";
+        this.players = new Player[] {p1, p2};
+        this.currPlayer = 0;
+    }
 
     public Board(String moveHistory, Player[] players) {
         this.grid = new int[HEIGHT][WIDTH];
         this.moveCount = 0; // load board will handle that
         this.moveHistory = moveHistory;
         this.players = players;
-        this.currPlayer = 0; // p1 is current player in the beginning.
+        this.currPlayer = 0;        
         loadBoard();
+    }
+
+    public Player getCurrentPlayer() {
+        return players[currPlayer];
+    }
+
+    public void switchPlayer() {
+        currPlayer = (currPlayer + 1) % 2; // switch player.
     }
 
     // create deep copy of board
@@ -76,11 +92,12 @@ public class Board {
     }
 
     public void makeMove(Move move) {
-        int value = move.player.colour == Colour.RED ? 1 : -1;
+        int value = move.player == players[0] ? 1 : -1;
         grid[move.row][move.col] = value;
         moveHistory += move.col;
         moves.push(move);
         moveCount++;
+        // switchPlayer();
         // removed the printing because it was slowing down minimax,
         // print after move has been made outside the board class or in another
         // function.
@@ -92,7 +109,8 @@ public class Board {
         moveCount--;
     }
 
-    public boolean checkGameWon(int row, int col) {
+
+   public boolean checkGameWon(int row, int col) {
         return checkVertical(row, col) || checkHorizontal(row, col) ||
                 checkDiagonalRight(row, col) || checkDiagonalLeft(row, col);
     }
@@ -224,14 +242,15 @@ public class Board {
             System.out.print("| " + (j + 1) + " ");
         }
         System.out.println("|");
-
+        String p1Color = players[0].colour == Colour.RED ? ANSI_RED : ANSI_GREEN;
+        String p2Color = players[1].colour == Colour.RED ? ANSI_RED : ANSI_GREEN;
         for (int i = HEIGHT - 1; i >= 0; i--) {
             System.out.print((i + 1) + "  ");
             for (int j = 0; j < WIDTH; j++) {
                 if (grid[i][j] == 1)
-                    System.out.print("| " + ANSI_RED + TOKEN + ANSI_RESET + " ");
+                    System.out.print("| " + p1Color + TOKEN + ANSI_RESET + " ");
                 else if (grid[i][j] == -1)
-                    System.out.print("| " + ANSI_GREEN + TOKEN + ANSI_RESET + " ");
+                    System.out.print("| " + p2Color + TOKEN + ANSI_RESET + " ");
                 else
                     System.out.print("|   ");
             }
