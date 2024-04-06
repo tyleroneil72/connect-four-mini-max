@@ -15,9 +15,8 @@ public class Move {
     // create move object, only allows column count of 1-7
     // may return NULL
 
-    public static Move createMove(Player player) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println(player.colour + "'s turn. Enter column: ");
+    public static Move createMove(Scanner scanner, Player player) {
+        System.out.println(player.name + "'s turn. Enter column: ");
         while (true) {
             try {
                 int col = scanner.nextInt();

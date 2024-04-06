@@ -33,22 +33,69 @@ public class Main {
         clearScreen();
         if (gameMode == 1) {
             // user selected Multiplayer.
-            checkFour();
+            System.out.print("Player 1 - Enter name: ");
+            String p1Name = scanner.nextLine();
+            while (p1Name.isEmpty()) {
+                clearScreen();
+                System.out.print("Player 1 - Enter name: ");
+                p1Name = scanner.nextLine();
+            }
+            System.out.print("Choose your color [R | Y]: ");
+            String p1Color = scanner.nextLine();
+            while (!p1Color.matches("(^R$|^Y$)")) {
+                System.out.print("Choose your color [R | Y]: ");
+                p1Color = scanner.nextLine();
+            }
+
+            System.out.print("Player 2 - Enter name: ");
+            String p2Name = scanner.nextLine();
+            while (p2Name.isEmpty()) {
+                clearScreen();
+                System.out.print("Player 2 - Enter name: ");
+                p2Name = scanner.nextLine();
+            }
+            Player p1 = new Player(p1Name, p1Color.equals("R") ? Colour.RED : Colour.YELLOW);
+            Player p2 = new Player(p2Name, p1Color.equals("R") ? Colour.YELLOW : Colour.RED);
+
+            playGame(p1, p2);
+
         } else if (gameMode == 2) {
             // user selected Single-Player
-            int difficulty;
-            while (true) {
-                // get difficulty of AI.
-                selectDifficulty();
-                System.out.print("Choose an option: ");
-                Integer choice = getChoice(1, 3);
-                if (choice == null) {
-                    clearScreen();
-                    continue;
-                }
-                difficulty = choice;
-                break;
+            // get user name
+            System.out.print("Enter name: ");
+            String name = scanner.nextLine();
+            while (name.isEmpty()) {
+                clearScreen();
+                System.out.print("Enter name: ");
+                name = scanner.nextLine();
             }
+
+            // get user color
+            System.out.print("Enter color [R | Y]: ");
+            String color = scanner.nextLine();
+            while (!color.matches("(^R$|^Y$)")) {
+                System.out.print("Enter color [R | Y]: ");
+                color = scanner.nextLine();
+            }
+
+            Player human = new Player(name, color.equals("R") ? Colour.RED : Colour.YELLOW);
+            Player AI = new AIPlayer(color.equals("R") ? Colour.YELLOW : Colour.RED);
+
+            // get player 1
+            System.out.print("Would you like to go first? [Y | N]: ");
+            String choice = scanner.nextLine();
+            while (!choice.matches("(^Y$|^N$)")) {
+                System.out.print("Would you like to go first? [Y | N]: ");
+                choice = scanner.nextLine();
+            }
+
+            clearScreen();
+            if (choice.equals("Y"))
+                playGame(human, AI);
+            else
+                playGame(AI, human);
+
+            
         }
     }
 
@@ -89,20 +136,6 @@ public class Main {
         return null;
     }
 
-    public static void selectDifficulty() {
-        // app screen to display AI difficulty options.
-        System.out.println("=".repeat(screenWidth));
-        System.out.println("||" + " ".repeat(screenWidth - 4) + "||");
-        String easy = formatMenuTextLjust("1. Easy");
-        System.out.println(easy);
-        String med = formatMenuTextLjust("2. Medium");
-        System.out.println(med);
-        String hard = formatMenuTextLjust("3. Hard");
-        System.out.println(hard);
-        System.out.println("||" + " ".repeat(screenWidth - 4) + "||");
-        System.out.println("=".repeat(screenWidth));
-    }
-
     public static void splashScreen() {
         // welcome screen displayed on start of application.
         System.out.println("=".repeat(screenWidth));
@@ -141,47 +174,46 @@ public class Main {
         System.out.println("=".repeat(screenWidth));
     }
 
-    public static void checkFour() {
+    public static void playGame(Player p1, Player p2) {
+        Board board = new Board(p1, p2);
+        board.printBoard();  
+        int x = 0, y = 0;
+        Move nextMove = null;      
+        while (board.moveCount < 42 && !board.checkGameWon(y, x)) {
+            if (board.getCurrentPlayer() instanceof AIPlayer) {
+                nextMove = ((AIPlayer) board.getCurrentPlayer()).getMove(board);
+            }
+            else {
+                if (nextMove != null && nextMove.player instanceof AIPlayer)
+                    System.out.println("MiniMax moved at: " + (nextMove.col + 1));
+                nextMove = board.getCurrentPlayer().getMove(scanner);
+            }
 
-        Board b = new Board();
-
-        Player p1 = new Player("P1", Colour.RED);
-        Player p2 = new Player("P2", Colour.YELLOW);
-        Player[] players = new Player[] { p1, p2 };
-
-        int y = 0;
-        int x = 0;
-        Move nextMove = null;
-
-        b.printBoard();
-
-        while (!b.checkGameWon(y, x) && b.moveCount < 42) {
-
-            nextMove = Move.createMove(players[b.moveCount % 2]);
-            if (b.checkAvailableMove(nextMove) == -1) {
-                System.out.println("Invalid move.");
+            if (board.checkAvailableMove(nextMove) == -1) {
+                System.out.println("Invalid Move!");
                 continue;
             }
 
-            b.makeMove(nextMove);
-            // Clear the console
-            System.out.print("\033[H\033[2J");
-            System.out.flush();
-            b.printBoard();
+            board.makeMove(nextMove);
+            board.switchPlayer();
 
+            clearScreen();
+            board.printBoard();
+    
             y = nextMove.row;
             x = nextMove.col;
-            System.out.println(x);
-            System.out.println(y);
+            
         }
-        if (b.moveCount < 42) {
+        if (board.moveCount < 42) {
             assert nextMove != null;
-            System.out.println("Game over, " + nextMove.player.colour + " won!");
-        } else
-            System.out.println("Game over, Draw!");
+            System.out.println("Game Over! " + nextMove.player.name + " wins!");
+        }
+        else {
+            System.out.println("Game Over! Draw!");
+        }
     }
-
     public static void main(String[] args) {
         app();
     }
+     
 }
