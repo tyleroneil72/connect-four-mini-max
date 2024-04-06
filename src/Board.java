@@ -231,26 +231,21 @@ public class Board {
     }
 
     public void printBoard() {
-        // Color codes for red, yellow, and reset.
-        String ANSI_RED = "\u001B[31m";
-        String ANSI_YELLOW = "\u001B[33m";
-        String ANSI_RESET = "\u001B[0m";
-        String ANSI_GREEN = "\u001B[32m";
-        String TOKEN = "O";
+        System.out.println("=".repeat(35));
         System.out.print("   ");
         for (int j = 0; j < WIDTH; j++) {
             System.out.print("| " + (j + 1) + " ");
         }
         System.out.println("|");
-        String p1Color = players[0].colour == Colour.RED ? ANSI_RED : ANSI_GREEN;
-        String p2Color = players[1].colour == Colour.RED ? ANSI_RED : ANSI_GREEN;
+        String p1Color = players[0].colour == Colour.RED ? "R" : "Y";
+        String p2Color = players[1].colour == Colour.RED ? "R" : "Y";
         for (int i = HEIGHT - 1; i >= 0; i--) {
             System.out.print((i + 1) + "  ");
             for (int j = 0; j < WIDTH; j++) {
                 if (grid[i][j] == 1)
-                    System.out.print("| " + p1Color + TOKEN + ANSI_RESET + " ");
+                    System.out.print("| " + p1Color + " ");
                 else if (grid[i][j] == -1)
-                    System.out.print("| " + p2Color + TOKEN + ANSI_RESET + " ");
+                    System.out.print("| " + p2Color + " ");
                 else
                     System.out.print("|   ");
             }

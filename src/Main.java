@@ -6,15 +6,8 @@ public class Main {
     private static Scanner scanner = new Scanner(System.in);
     private static int screenWidth = 40;
 
-    public static void clearScreen() {
-        // helper function to clear screen.
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
-    }
-
     public static void app() {
         // method to dictate main flow of the application.
-        clearScreen();
 
         splashScreen();
         int gameMode;
@@ -24,24 +17,21 @@ public class Main {
             System.out.print("Choose an option: ");
             Integer choice = getChoice(1, 2);
             if (choice == null) {
-                clearScreen();
                 continue;
             }
             gameMode = choice;
             break;
         }
-        clearScreen();
         if (gameMode == 1) {
             // user selected Multiplayer.
             System.out.print("Player 1 - Enter name: ");
             String p1Name = scanner.nextLine();
             while (p1Name.isEmpty()) {
-                clearScreen();
                 System.out.print("Player 1 - Enter name: ");
                 p1Name = scanner.nextLine();
             }
             System.out.print("Choose your color [R | Y]: ");
-            String p1Color = scanner.nextLine();
+            String p1Color = scanner.nextLine().toUpperCase();
             while (!p1Color.matches("(^R$|^Y$)")) {
                 System.out.print("Choose your color [R | Y]: ");
                 p1Color = scanner.nextLine();
@@ -50,7 +40,6 @@ public class Main {
             System.out.print("Player 2 - Enter name: ");
             String p2Name = scanner.nextLine();
             while (p2Name.isEmpty()) {
-                clearScreen();
                 System.out.print("Player 2 - Enter name: ");
                 p2Name = scanner.nextLine();
             }
@@ -65,14 +54,13 @@ public class Main {
             System.out.print("Enter name: ");
             String name = scanner.nextLine();
             while (name.isEmpty()) {
-                clearScreen();
                 System.out.print("Enter name: ");
                 name = scanner.nextLine();
             }
 
             // get user color
             System.out.print("Enter color [R | Y]: ");
-            String color = scanner.nextLine();
+            String color = scanner.nextLine().toUpperCase();
             while (!color.matches("(^R$|^Y$)")) {
                 System.out.print("Enter color [R | Y]: ");
                 color = scanner.nextLine();
@@ -83,13 +71,12 @@ public class Main {
 
             // get player 1
             System.out.print("Would you like to go first? [Y | N]: ");
-            String choice = scanner.nextLine();
+            String choice = scanner.nextLine().toUpperCase();
             while (!choice.matches("(^Y$|^N$)")) {
                 System.out.print("Would you like to go first? [Y | N]: ");
                 choice = scanner.nextLine();
             }
 
-            clearScreen();
             if (choice.equals("Y"))
                 playGame(human, AI);
             else
@@ -153,7 +140,6 @@ public class Main {
         System.out.println("||" + " ".repeat(screenWidth - 4) + "||");
         System.out.println("=".repeat(screenWidth));
         scanner.nextLine();
-        clearScreen();
     }
 
     public static void mainMenu() {
@@ -195,7 +181,6 @@ public class Main {
             board.makeMove(nextMove);
             board.switchPlayer();
 
-            clearScreen();
             board.printBoard();
 
             y = nextMove.row;
