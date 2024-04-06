@@ -161,6 +161,7 @@ public class Main {
 
     public static void playGame(Player p1, Player p2) {
         Board board = new Board(p1, p2);
+        // Board board = new Board("2333335216362661110105244452", new Player[] {p1, p2}); // board to test minimax (ideally human should go first)
         board.printBoard();
         int x = 0, y = 0;
         Move nextMove = null;

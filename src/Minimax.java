@@ -23,7 +23,7 @@ public class Minimax {
             } else {
                 return depth;
             }
-        } else if (board.moveCount > 42) // check for draw.
+        } else if (depth == 0) // check for draw. same as moveCount >= 42
         {
             return 0;
         }
