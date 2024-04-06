@@ -35,13 +35,27 @@ public class Main {
             // user selected Multiplayer.
             System.out.print("Player 1 - Enter name: ");
             String p1Name = scanner.nextLine();
+            while (p1Name.isEmpty()) {
+                clearScreen();
+                System.out.print("Player 1 - Enter name: ");
+                p1Name = scanner.nextLine();
+            }
             System.out.print("Choose your color [R | Y]: ");
             String p1Color = scanner.nextLine();
+            while (!p1Color.matches("(^R$|^Y$)")) {
+                System.out.print("Choose your color [R | Y]: ");
+                p1Color = scanner.nextLine();
+            }
 
             System.out.print("Player 2 - Enter name: ");
             String p2Name = scanner.nextLine();
-            Player p1 = new Player(p1Name, p1Color == "R" ? Colour.RED : Colour.YELLOW);
-            Player p2 = new Player(p2Name, p1Color == "R" ? Colour.YELLOW : Colour.RED);
+            while (p2Name.isEmpty()) {
+                clearScreen();
+                System.out.print("Player 2 - Enter name: ");
+                p2Name = scanner.nextLine();
+            }
+            Player p1 = new Player(p1Name, p1Color.equals("R") ? Colour.RED : Colour.YELLOW);
+            Player p2 = new Player(p2Name, p1Color.equals("R") ? Colour.YELLOW : Colour.RED);
 
             playGame(p1, p2);
 
@@ -60,14 +74,21 @@ public class Main {
             System.out.print("Enter color [R | Y]: ");
             String color = scanner.nextLine();
             while (!color.matches("(^R$|^Y$)")) {
-                System.out.print("Enter name: ");
-                name = scanner.nextLine();
+                System.out.print("Enter color [R | Y]: ");
+                color = scanner.nextLine();
             }
+
             Player human = new Player(name, color.equals("R") ? Colour.RED : Colour.YELLOW);
             Player AI = new AIPlayer(color.equals("R") ? Colour.YELLOW : Colour.RED);
+
             // get player 1
             System.out.print("Would you like to go first? [Y | N]: ");
             String choice = scanner.nextLine();
+            while (!choice.matches("(^Y$|^N$)")) {
+                System.out.print("Would you like to go first? [Y | N]: ");
+                choice = scanner.nextLine();
+            }
+
             clearScreen();
             if (choice.equals("Y"))
                 playGame(human, AI);
