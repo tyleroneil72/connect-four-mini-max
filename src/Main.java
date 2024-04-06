@@ -95,7 +95,6 @@ public class Main {
             else
                 playGame(AI, human);
 
-            
         }
     }
 
@@ -176,14 +175,13 @@ public class Main {
 
     public static void playGame(Player p1, Player p2) {
         Board board = new Board(p1, p2);
-        board.printBoard();  
+        board.printBoard();
         int x = 0, y = 0;
-        Move nextMove = null;      
+        Move nextMove = null;
         while (board.moveCount < 42 && !board.checkGameWon(y, x)) {
             if (board.getCurrentPlayer() instanceof AIPlayer) {
                 nextMove = ((AIPlayer) board.getCurrentPlayer()).getMove(board);
-            }
-            else {
+            } else {
                 if (nextMove != null && nextMove.player instanceof AIPlayer)
                     System.out.println("MiniMax moved at: " + (nextMove.col + 1));
                 nextMove = board.getCurrentPlayer().getMove(scanner);
@@ -199,21 +197,20 @@ public class Main {
 
             clearScreen();
             board.printBoard();
-    
+
             y = nextMove.row;
             x = nextMove.col;
-            
+
         }
         if (board.moveCount < 42) {
             assert nextMove != null;
             System.out.println("Game Over! " + nextMove.player.name + " wins!");
-        }
-        else {
+        } else {
             System.out.println("Game Over! Draw!");
         }
     }
+
     public static void main(String[] args) {
         app();
     }
-     
 }
