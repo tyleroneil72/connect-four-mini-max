@@ -5,7 +5,7 @@ public class Minimax {
     public static int[] columnOrder = new int[] { 3, 2, 4, 1, 5, 0, 6 };
 
     public static int runMinimax(Board board, boolean isMax, int alpha, int beta, int depth) {
-        
+
         /*
          * Minimax algorithm with alpha-beta pruning, move ordering and some sort of
          * iterative deepining(?)
@@ -15,7 +15,7 @@ public class Minimax {
          */
         Move lastMove = board.moves.peek();
         // check for terminal states, win/loss
-       
+
         if (board.checkGameWon(lastMove.row, lastMove.col)) {
             if (board.moveCount % 2 == 0) {
                 // player 2 will always win on an even move count.
@@ -103,8 +103,7 @@ public class Minimax {
                     bestScore = score;
                     bestCol = col;
                 }
-            }
-            else {
+            } else {
                 if (score < bestScore) {
                     bestScore = score;
                     bestCol = col;

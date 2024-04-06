@@ -10,5 +10,4 @@ public class AIPlayer extends Player {
         board.checkAvailableMove(move);
         return move;
     }
-    
 }
