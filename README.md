@@ -201,6 +201,10 @@ int runMinimax(Board board, Player[] players, bool isMax,int alpha, int beta, in
 }
 ```
 
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
 ## Attribution
 This Project was a group project for a data structures and algorithms course.
 
