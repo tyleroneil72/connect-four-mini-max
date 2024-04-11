@@ -202,11 +202,13 @@ int runMinimax(Board board, Player[] players, bool isMax,int alpha, int beta, in
 ```
 
 ## Attribution
-This Project was a group project for a data structures and algorithms course. 
+This Project was a group project for a data structures and algorithms course.
+
 Other Group Members Include:
-@aadi219
-@cheukman196
-@Haley-K
+- [@aadi219](https://github.com/aadi219)
+- [@cheukman196](https://github.com/cheukman196)
+- [@Haley-K](https://github.com/Haley-K)
+
 
 ## Contact
 For any inquiries or questions, you can reach me at tyleroneildev@gmail.com
