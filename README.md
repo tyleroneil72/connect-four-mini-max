@@ -1,5 +1,14 @@
-- - - 
-## Minimax Algorithm for the Connect Four Game
+# Minimax Algorithm for the Connect Four Game
+
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
+
+## Description
+This repository features a Java application of Connect Four, using a Minimax algorithm with alpha-beta pruning for the AI. The Minimax algorithm is employed to forecast possible moves and their outcomes, enabling the AI to make strategic decisions. Alpha-beta pruning is integrated to trim down the search tree, reducing the number of nodes evaluated and speeding up the decision process. This results in a more challenging and efficient AI opponent.
+
+## Example
+<img width="359" alt="Screenshot 2024-04-11 at 9 40 24 AM" src="https://github.com/tyleroneil72/connect-four-mini-max/assets/43754564/0afbb453-dcb3-425b-8964-05fc8ff3c8c5">
+
 
 ### Terminal States
 For Connect 4, the terminal states for the game are as follows:
@@ -191,3 +200,14 @@ int runMinimax(Board board, Player[] players, bool isMax,int alpha, int beta, in
 	}
 }
 ```
+
+## Attribution
+This Project was a group project for a data structures and algorithms course. 
+Other Group Members Include:
+@aadi219
+@cheukman196
+@Haley-K
+
+## Contact
+For any inquiries or questions, you can reach me at tyleroneildev@gmail.com
+or on my linkedin at https://ca.linkedin.com/in/tyler-oneil-dev
